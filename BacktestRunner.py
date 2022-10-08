@@ -12,9 +12,9 @@ from signalHandler import signalHandler
 from WeeklySummary import get_weekly_summary
 from TradeSummary import get_trade_summary
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #Mute cuda warnings
-import tensorflow as tf 
-import keras.models
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #Mute cuda warnings
+#import tensorflow as tf 
+#import keras.models
 
 
 class BacktestRunner:
