@@ -10,6 +10,7 @@ Basic instructions - BacktestRunFile.py
   or
   
     b) Backtest.inputDataAndInfo method: Read data and handling formatting + input currency and frequency.
+    
 
 4. Import the trading strategy from the module. Details on how this must be set up are below.
 5. Input other parameters for the backtest:
