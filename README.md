@@ -5,11 +5,11 @@ Basic instructions - BacktestRunFile.py
 1. Install necessary modules such as datetime, pandas, numpy as well as ta for the strategies.
 2. Data read - comment out either Backtest.readAndPrepData or Backtest.inputDataAndInfo. Further info below as well as context inside the functions.
 
-  a) Backtest.readAndPrepData method: Set up dates, data directory, time column label and delimitter.
+    a) Backtest.readAndPrepData method: Set up dates, data directory, time column label and delimitter.
   
   or
   
-  b) Backtest.inputDataAndInfo method: Read data and handling formatting + input currency and frequency.
+    b) Backtest.inputDataAndInfo method: Read data and handling formatting + input currency and frequency.
 
 4. Import the trading strategy from the module. Details on how this must be set up are below.
 5. Input other parameters for the backtest:
