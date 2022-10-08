@@ -1,7 +1,8 @@
-from locale import currency
 import pandas as pd
 import numpy as np
 import datetime
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 class signalHandler:
     """
