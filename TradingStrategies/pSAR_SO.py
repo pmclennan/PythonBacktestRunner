@@ -42,7 +42,7 @@ class pSAR_SO:
         # pSAR flips from above close to below in the past 3 bars, and slowK or slowD above 70
         elif (pSAR.iloc[-3] > close.iloc[-3] and pSAR.iloc[-1] < close.iloc[-1]) and (slow_k.iloc[-1] > 70 or slow_d.iloc[-1] > 70):
 
-            action = 1
+            action = -1
 
         return action
 
