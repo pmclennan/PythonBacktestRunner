@@ -95,7 +95,7 @@ class signalHandler:
         PL -= self.broker_cost
         return PL
 
-    def closeTrade(self,PL):
+    def closeTrade(self,PL, bid_price, ask_price, index):
         """
         Function called to handle updating attributes once a trade is closed.
         Parameters:
@@ -111,6 +111,7 @@ class signalHandler:
         elif self.prev_traded_position == 1:
             self.current_action = "close long"        
         
+        self.store_executed_price(bid_price, ask_price, index)
         self.total_profit += PL
 
         self.prev_traded_position = 0
@@ -278,7 +279,7 @@ class signalHandler:
             self.current_action = "close short"
             PL = (self.prev_traded_position*(ask_price - self.prev_traded_price)) #Executed at ask for a buy 
             PL = self.bandPL(PL)
-            self.closeTrade(PL)
+            self.closeTrade(PL, bid_price, ask_price, index)
             self.saveStats(PL,index)
             self.store_executed_price(bid_price, ask_price, index)
 
@@ -320,7 +321,7 @@ class signalHandler:
             self.current_action = "close long"
             PL = (self.prev_traded_position*(bid_price - self.prev_traded_price)) #Executed at bid for a sell + flat spread
             PL = self.bandPL(PL)
-            self.closeTrade(PL)
+            self.closeTrade(PL, bid_price, ask_price, index)
             self.saveStats(PL,index)
             self.store_executed_price(bid_price, ask_price, index)
         else: 
@@ -348,14 +349,14 @@ class signalHandler:
             PL = (self.prev_traded_position*(ask_price - self.prev_traded_price)) #MtM PL when short based off ask price (as if we were to buy to close the short)
             
             #Take Profit
-            if self.take_profit_px <= ask_price:
+            if self.take_profit_px >= ask_price:
                 PL = self.bandPL(PL) 
-                self.closeTrade(PL)
+                self.closeTrade(PL, bid_price, ask_price, index)
 
             #Stop Loss
-            elif self.stop_loss_px >= ask_price:
+            elif self.stop_loss_px <= ask_price:
                 PL = self.bandPL(PL)
-                self.closeTrade(PL)
+                self.closeTrade(PL, bid_price, ask_price, index)
 
         elif self.prev_traded_position == 1:
 
@@ -364,12 +365,12 @@ class signalHandler:
             #Take Profit
             if self.take_profit_px <= bid_price:                
                 PL = self.bandPL(PL) 
-                self.closeTrade(PL)  
+                self.closeTrade(PL, bid_price, ask_price, index)  
 
             #Stop Loss
             elif self.stop_loss_px >= bid_price:
                 PL = self.bandPL(PL)
-                self.closeTrade(PL)         
+                self.closeTrade(PL, bid_price, ask_price, index)         
 
         self.saveStats(PL,index)
         return self.total_profit
