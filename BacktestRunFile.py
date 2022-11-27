@@ -58,9 +58,6 @@ broker_cost = broker_cost * factor
 runType = 1 #Pertains to how the objects are called (different for DL strategies) as well as if indicator dataframes are saved in history. 
     #Review BacktestRunner.runBacktest for further context
 
-#Note here that the loop is set up such that a range of strategies and limits can be tested in one run.
-#But it still works on just a single limit level or strategy, ie have the lists as just one element.
-
 backtestSummaries = pd.DataFrame()
 
 for file in dataFiles:
