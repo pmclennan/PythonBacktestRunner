@@ -427,7 +427,9 @@ class signalHandler:
         Resets the stop_loss_px and take_profit_px that the checkStopConditions checks.
 
         Parameters:
-        close (float): The current close price to apply the stop_loss/take_profit around.
+        high_price (float): The current high price to check stop loss hasn't been hit for shorts.
+        low_price (float): The current low price to check stop loss hasn't been hit for longs.
+        close_price (float): The current close price to apply the stop_loss/take_profit around.
         index (int): The current index to apply this to.
 
         """
