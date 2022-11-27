@@ -46,7 +46,7 @@ limit_type = 'Percentage'
 stop_loss = -1
 take_profit = 2
 factor = 1/100 #This can be 1/10000 for one pip if using 'Flat' limit, 1/100 for one percent if using 'Percentage' limits, and so on.
-broker_cost = 0.5 #NB this is now applied twice, on the way in and on the way out.
+broker_cost = 0.2 #NB this is now applied twice, on the way in and on the way out.
 guaranteed_sl = False #Whether limits are firm and cannot be gapped by high/low price or not.
 dynamic_limits = True #Whether limits are reset with a stronger signal or not
 
