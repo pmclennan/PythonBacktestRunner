@@ -1,0 +1,5 @@
+Start,End,Asset,Frequency,Total Trades,Total P/L,Total P/L (pips),Trades Won (n),Trades Won (%),Trades Lost (n),Trades Lost (%),Trades Tied (n),Trades Tied (%)
+2022-01-04 00:00,2022-03-29 00:00,AAPL,D1,3,,,1,33.33333333333333,2,66.66666666666666,0,0.0
+2022-01-03 01:00,2022-03-29 23:00,EURUSD.a,M5,1421,,,0,0.0,1421,100.0,0,0.0
+2022-01-03 01:00,2022-03-29 23:00,GBPUSD.a,M15,482,,,0,0.0,482,100.0,0,0.0
+2022-02-08 00:00,2022-03-29 00:00,HSBC,D1,2,,,2,100.0,0,0.0,0,0.0
