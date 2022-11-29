@@ -296,11 +296,11 @@ class signalHandler:
             if self.dynamic_limits:
                 self.updateLimits(high_price, low_price, close_price, index)
             else:
-                self.checkStopConditions(high_price, low_price, index)
+                self.checkStopConditions(close_price, high_price, low_price, index)
 
         elif self.prev_traded_position == -1:
             if self.hold_direction:
-                self.checkStopConditions(high_price, low_price, index)
+                self.checkStopConditions(close_price, high_price, low_price, index)
             else:
                 self.current_action = "close short"
                 PL = (self.prev_traded_position*(open_priceT1 - self.prev_traded_price)) #Executed at ask for a buy 
@@ -358,11 +358,11 @@ class signalHandler:
             if self.dynamic_limits:
                 self.updateLimits(high_price, low_price, close_price, index)
             else:
-                self.checkStopConditions(high_price, low_price, index)
+                self.checkStopConditions(close_price, high_price, low_price, index)
         
         elif self.prev_traded_position == 1:
             if self.hold_direction:
-                self.checkStopConditions(high_price, low_price, index)
+                self.checkStopConditions(close_price, high_price, low_price, index)
             else:
                 self.current_action = "close long"
                 PL = (self.prev_traded_position*(open_priceT1 - self.prev_traded_price)) #Executed at bid for a sell + flat spread
@@ -374,12 +374,14 @@ class signalHandler:
 
         self.curr_broker_cost = ""
     
-    def checkStopConditions(self, high_price, low_price, index):
+    def checkStopConditions(self, close_price, high_price, low_price, index):
         """
         Function used to check stop conditions at each iteration and close trade if limits are hit.
         Conditions are evaluated based on high/low price where relevant.
+        Running MtM PnL is based off current bar close price 
 
         Parameters:
+        close_price (float): The current close price from the input data.
         high_price (float): The current high price from the input data.
         low_price (float): The current low price from the input data.            
         index (int): The index to store this information in reference to the history data.
@@ -394,6 +396,8 @@ class signalHandler:
         #Short
         if self.prev_traded_position == -1:
 
+            PL = self.prev_traded_position * (close_price - self.prev_traded_price)
+
             #Take Profit
             if low_price <= self.take_profit_px:                
                 PL = self.prev_traded_price - low_price
@@ -406,6 +410,8 @@ class signalHandler:
 
         #Long
         elif self.prev_traded_position == 1:
+
+            PL = self.prev_traded_position * (close_price - self.prev_traded_price)
           
             #Take Profit
             if high_price >= self.take_profit_px:
@@ -437,8 +443,10 @@ class signalHandler:
         #Wish to check stop conditions, without fully closing the trade, then reset limits if also profitable.
         reset_flag = 0
 
+        PL = self.prev_traded_position * (close_price - self.prev_traded_price)
+
         if self.prev_traded_position == 1:
-            if low_price >= self.stop_loss_px and close_price - self.prev_traded_price > 0:
+            if low_price >= self.stop_loss_px and PL > 0:
                 reset_flag = 1
                 if self.limit_type == 'Flat':
                     self.stop_loss_px = close_price + self.stop_loss
@@ -448,7 +456,7 @@ class signalHandler:
                     self.take_profit_px = close_price * (1 + self.take_profit)
 
         elif self.prev_traded_position == -1:
-            if high_price <= self.stop_loss_px and self.prev_traded_price - close_price > 0:
+            if high_price <= self.stop_loss_px and PL > 0:
                 reset_flag = 1
                 if self.limit_type == 'Flat':
                     self.stop_loss_px = close_price - self.stop_loss
@@ -464,7 +472,6 @@ class signalHandler:
             #Forego checking stop conditions, as we have updated these limits at the "end" of the bar.
             #Flag the action as updating limits, then save stats.
             self.current_action = "update Limits"
-            PL = 0
             self.saveStats(PL,index)
         else:
-            self.checkStopConditions(high_price, low_price, index)
+            self.checkStopConditions(close_price, high_price, low_price, index)

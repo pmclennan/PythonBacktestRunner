@@ -26,7 +26,7 @@ from BacktestRunner import BacktestRunner
 tz = pytz.utc
 startDate = datetime.datetime(2022, 1, 1, tzinfo = tz) #Start Date - adjust as necessary
 endDate = datetime.datetime(2022, 3, 30, tzinfo = tz) #End Date - adjust as necessary
-use_dates = True #Flag whether to use a date window, or not. Setting to zero makes the above irrelevant.
+use_dates = False #Flag whether to use a date window, or not. Setting to zero makes the above irrelevant.
 dataFolder = os.path.join(os.getcwd(), 'ExampleDatasets')
 dataFiles = os.listdir(dataFolder) #Set up for iteration
 exportFolder = os.path.join(os.getcwd(), 'BacktestResults') #Where reports are saved.

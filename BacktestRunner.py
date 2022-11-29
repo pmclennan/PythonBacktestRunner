@@ -212,7 +212,7 @@ class BacktestRunner:
             elif signal == -1:
                 self.broker.sell(openPriceT1, highPrice, lowPrice, closePrice, index)
             elif signal == 0:
-                self.broker.checkStopConditions(highPrice, lowPrice, index)
+                self.broker.checkStopConditions(closePrice, highPrice, lowPrice, index)
             else:
                 raise Exception ("Unknown Signal!")
 
